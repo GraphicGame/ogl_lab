@@ -1,2 +1,2 @@
 # ogl_lab
-ogl lab
+ogl lab, some ogl exercises.
