@@ -12,4 +12,9 @@
 
 #define flush() glutSwapBuffers()
 
+#define color_red glColor3f(1, 0, 0)
+#define color_green glColor3f(0, 1, 0)
+#define color_blue glColor3f(0, 0, 1)
+#define color_yellow glColor3f(1, 1, 0)
+
 #endif

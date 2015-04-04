@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 
