@@ -17,4 +17,8 @@
 #define color_blue glColor3f(0, 0, 1)
 #define color_yellow glColor3f(1, 1, 0)
 
+static const int WW = 960;
+static const int WH = 640;
+#define aspect_ratio ((GLfloat)WW / (GLfloat)WH)
+
 #endif

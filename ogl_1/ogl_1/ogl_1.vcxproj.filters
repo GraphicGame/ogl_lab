@@ -27,6 +27,9 @@
     <ClCompile Include="src\ogl1_4_rotation.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ogl1_5_3dspace.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h">

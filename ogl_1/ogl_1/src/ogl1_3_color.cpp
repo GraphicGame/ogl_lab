@@ -7,9 +7,6 @@
 #include "GL/GLU.h"
 #include "glut.h"
 
-static const int WW = 960;
-static const int WH = 640;
-
 static void init_gl() {
 	glClearColor(0, 0, 0, 1);
 	glViewport(0, 0, WW, WH);

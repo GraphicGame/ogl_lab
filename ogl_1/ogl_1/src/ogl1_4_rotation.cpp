@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 
@@ -6,9 +6,6 @@
 #include "GL/glew.h"
 #include "GL/GLU.h"
 #include "glut.h"
-
-static const int WW = 960;
-static const int WH = 640;
 
 static float s_tri_angle = 0.0f;
 static float s_quad_angle = 0.0f;

@@ -7,9 +7,6 @@
 
 #include "common_header.h"
 
-static const int WW = 960;
-static const int WH = 640;
-
 static void init_gl() {
 	glClearColor(0, 0, 0, 1);
 	glShadeModel(GL_SMOOTH);
