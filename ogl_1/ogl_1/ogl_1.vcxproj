@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\graphics_labs\ogl_labs\ogl_lab.git\glut;D:\graphics_labs\ogl_labs\ogl_lab.git\glew;D:\graphics_labs\ogl_labs\ogl_lab.git\ogl_1\ogl_1\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -79,14 +79,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\image_win32.cpp" />
     <ClCompile Include="src\ogl1_1_glew_glut_fw.cpp" />
     <ClCompile Include="src\ogl1_2_polygon.cpp" />
     <ClCompile Include="src\ogl1_3_color.cpp" />
     <ClCompile Include="src\ogl1_4_rotation.cpp" />
     <ClCompile Include="src\ogl1_5_3dspace.cpp" />
+    <ClCompile Include="src\ogl1_6_texturing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h" />
+    <ClInclude Include="inc\image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
