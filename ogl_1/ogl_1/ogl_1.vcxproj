@@ -86,6 +86,7 @@
     <ClCompile Include="src\ogl1_4_rotation.cpp" />
     <ClCompile Include="src\ogl1_5_3dspace.cpp" />
     <ClCompile Include="src\ogl1_6_texturing.cpp" />
+    <ClCompile Include="src\ogl1_7_light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h" />
