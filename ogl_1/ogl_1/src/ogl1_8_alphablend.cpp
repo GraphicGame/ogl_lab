@@ -1,7 +1,6 @@
-//#define __exec
+#define __exec
 
 #include <stdio.h>
-
 #include "common_header.h"
 #include "GL/glew.h"
 #include "GL/GLU.h"
@@ -9,25 +8,30 @@
 #include "image.h"
 
 static image_data *s_image = nullptr;
+static GLuint s_tex_id = 0;
 
-static GLfloat s_angle = 0.0f;
 static GLfloat s_rot_x = 0;
 static GLfloat s_rot_y = 0;
-
-static GLuint s_tex_id = 0;
-static bool s_light_on = false;
-
+static GLfloat s_angle = 0.0f;
 static GLfloat s_x = 0.0f;
 static GLfloat s_z = -2.0f;
 
+static bool s_light_on = false;
+static bool s_blend_on = false;
+
 static void init_light() {
-	GLfloat light_ambient[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-	GLfloat light_diffuse[] = { 2.0f, 2.0f, 2.0f, 1.0f };
-	GLfloat light_pos[] = { 0.0f, -0.6f, 2.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+	float l_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	float l_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float l_pos[] = { 0.0f, -0.6f, 2.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, l_pos);
 	glEnable(GL_LIGHT0);
+}
+
+static void init_blend() {
+	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 }
 
 static void init_gl() {
@@ -45,7 +49,8 @@ static void init_gl() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	glEnable(GL_TEXTURE_2D);
+	init_light();
+	init_blend();
 }
 
 static void on_draw() {
@@ -144,16 +149,28 @@ static void on_draw() {
 static void on_key(uchar code, int x, int y) {
 	switch (code) {
 	case 'x':
-		if (s_rot_x == 0)
-			s_rot_x = 1;
-		else
+		if (s_rot_x == 1)
 			s_rot_x = 0;
+		else
+			s_rot_x = 1;
 		break;
 	case 'y':
-		if (s_rot_y == 0)
-			s_rot_y = 1;
-		else
+		if (s_rot_y == 1)
 			s_rot_y = 0;
+		else
+			s_rot_y = 1;
+		break;
+	case 'w':
+		s_z += -0.06f;
+		break;
+	case 's':
+		s_z += 0.06f;
+		break;
+	case 'a':
+		s_x += -0.06f;
+		break;
+	case 'd':
+		s_x += 0.06f;
 		break;
 	case 'l':
 		s_light_on = !s_light_on;
@@ -162,44 +179,46 @@ static void on_key(uchar code, int x, int y) {
 		else
 			glDisable(GL_LIGHTING);
 		break;
-	case 'w':
-		s_z += -0.06f;
-		break;
-	case 'a':
-		s_x += -0.06f;
-		break;
-	case 's':
-		s_z += 0.06;
-		break;
-	case 'd':
-		s_x += 0.06f;
+	case 'b':
+		s_blend_on = !s_blend_on;
+		if (s_blend_on) {
+			glEnable(GL_BLEND);
+			glDisable(GL_DEPTH_TEST);
+		}
+		else {
+			glDisable(GL_BLEND);
+			glEnable(GL_DEPTH_TEST);
+		}
 		break;
 	default:
 		break;
 	}
 }
 
-static void load_image() {
+static void load_gl_textures() {
 	if (s_image == nullptr) {
 		s_image = new image_data();
 	}
-	img_load_image("E:/texture3.jpg", s_image);
+	img_load_image("E:/texture1.jpg", s_image);
+
+	glEnable(GL_TEXTURE_2D);
 
 	glGenTextures(1, &s_tex_id);
 	glBindTexture(GL_TEXTURE_2D, s_tex_id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, s_image->width, s_image->height, 0, s_image->get_gl_format(), GL_UNSIGNED_BYTE, s_image->pixels);
+
+	delete s_image;
+	s_image = nullptr;
 }
 
 #ifdef __exec
 int main(int argc, char *argv[]) {
-	init_gl_window(WW, WH, "7");
+	init_gl_window(WW, WH, "8");
 
 	init_gl();
-	load_image();
-	init_light();
-
+	load_gl_textures();
 	glutDisplayFunc(on_draw);
 	glutIdleFunc(on_draw);
 	glutKeyboardFunc(on_key);
