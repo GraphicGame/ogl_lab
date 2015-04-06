@@ -42,6 +42,9 @@
     <ClCompile Include="src\ogl1_8_alphablend.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ogl1_9_fireworks.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h">
