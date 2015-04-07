@@ -27,8 +27,8 @@ typedef unsigned char uchar;
 #define color_1 glColor3f(56/_c, 94/_c, 15/_c)
 #define color_2 glColor3f(61/_c, 145/_c, 64/_c)
 
-static const int WW = 960;
-static const int WH = 640;
+static int WW = 960;
+static int WH = 640;
 #define aspect_ratio ((GLfloat)WW / (GLfloat)WH)
 
 #define gl_check_error() \

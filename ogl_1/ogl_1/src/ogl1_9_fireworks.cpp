@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 #include <math.h>
@@ -30,7 +30,7 @@ typedef struct {
 	GLfloat down_rotate_speed;
 } fw_node;
 
-static const int num_nodes = 300;
+static const int num_nodes = 400;
 static vector<fw_node*> s_fireworks;
 
 enum fw_state {
@@ -238,6 +238,9 @@ static void load_gl_textures() {
 
 #ifdef __exec
 int main(int argc, char *argv[]) {
+	WW = 1600;
+	WH = 900;
+
 	init_gl_window(WW, WH, "9");
 
 	init_gl();
