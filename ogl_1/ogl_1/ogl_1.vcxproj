@@ -81,7 +81,7 @@
   <ItemGroup>
     <ClCompile Include="src\image_win32.cpp" />
     <ClCompile Include="src\ogl1_10_simple_3d_scene.cpp" />
-    <ClCompile Include="src\ogl1_11_just_test.cpp" />
+    <ClCompile Include="src\ogl1_11_flying_flag.cpp" />
     <ClCompile Include="src\ogl1_1_glew_glut_fw.cpp" />
     <ClCompile Include="src\ogl1_2_polygon.cpp" />
     <ClCompile Include="src\ogl1_3_color.cpp" />
