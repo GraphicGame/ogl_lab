@@ -27,6 +27,7 @@ vector<polygon*> s_polygons;
 
 typedef struct {
 	GLfloat x, y, z;
+	GLfloat rot_y;
 } simple_viewer;
 static simple_viewer s_viewer;
 
@@ -49,14 +50,14 @@ static void init_gl() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-	GLfloat l_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	GLfloat l_ambient[] = { 2.5f, 2.5f, 2.5f, 1.0f };
 	GLfloat l_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat l_pos[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat l_pos[] = { 0.0f, 2.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_diffuse);
 	glLightfv(GL_LIGHT0, GL_POSITION, l_pos);
 	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 }
 
 static void on_draw() {
@@ -65,9 +66,11 @@ static void on_draw() {
 	glBindTexture(GL_TEXTURE_2D, s_tex_ids[0]);
 
 	glTranslatef(-s_viewer.x, -s_viewer.y, -s_viewer.z);
+	glRotatef(-s_viewer.rot_y, 0, 1, 0);
 	for (int i = 0; i < s_polygons.size(); i++) {
 		polygon *poly = s_polygons[i];
 		glBegin(GL_QUADS);
+		glNormal3f(0, 1, 0);
 		for (int vi = 0; vi < 4; vi++) {
 			glTexCoord2f(poly->v[vi].u, poly->v[vi].v);
 			glVertex3f(poly->v[vi].x, poly->v[vi].y, poly->v[vi].z);
@@ -104,6 +107,12 @@ static void on_key(uchar code, int x, int y) {
 		break;
 	case 'k':
 		s_speed += 0.1f;
+		break;
+	case 'u':
+		s_viewer.rot_y += 0.6f;
+		break;
+	case 'i':
+		s_viewer.rot_y -= 0.6f;
 		break;
 	default:
 		break;
@@ -203,6 +212,7 @@ static void init_viewer() {
 	s_viewer.x = 0;
 	s_viewer.y = 2;
 	s_viewer.z = 8;
+	s_viewer.rot_y = 0;
 }
 
 #ifdef __exec
