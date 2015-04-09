@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 #include <vector>
@@ -21,9 +21,9 @@ typedef struct {
 	vertex v[4];
 } polygon;
 
-vector<image_data*> s_images;
-vector<GLuint> s_tex_ids;
-vector<polygon*> s_polygons;
+static vector<image_data*> s_images;
+static vector<GLuint> s_tex_ids;
+static vector<polygon*> s_polygons;
 
 typedef struct {
 	GLfloat x, y, z;

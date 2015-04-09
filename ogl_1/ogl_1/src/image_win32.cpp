@@ -1,4 +1,5 @@
 #include "image.h"
+#include "utils.h"
 
 #include <windows.h>
 #include <wincodec.h>
@@ -12,28 +13,6 @@ typedef struct image_decoder {
 } image_decoder;
 
 static image_decoder *s_decoder = nullptr;
-
-static wchar_t* char2wchar_t(const char* str) {
-	int len = MultiByteToWideChar(CP_UTF8, 0, str, -1, NULL, 0);
-	if (len == 0){
-		return NULL;
-	}
-	wchar_t* buf = (wchar_t*)malloc(sizeof(wchar_t)*(len + 1));
-	MultiByteToWideChar(CP_UTF8, 0, str, -1, buf, len);
-
-	return buf;
-}
-
-static char* wchar_t2char(const wchar_t* str) {
-	int len = WideCharToMultiByte(CP_UTF8, 0, str, -1, NULL, 0, NULL, NULL);
-	if (len == 0){
-		return NULL;
-	}
-	char* buf = (char*)malloc(sizeof(char)*(len + 1));
-	WideCharToMultiByte(CP_UTF8, 0, str, -1, buf, len, NULL, NULL);
-
-	return buf;
-}
 
 void img_init_decoder() {
 	::CoInitialize(NULL);
