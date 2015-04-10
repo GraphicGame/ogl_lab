@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ogl1_12_display_list.cpp" />
     <ClCompile Include="src\image_win32.cpp" />
     <ClCompile Include="src\ogl1_10_simple_3d_scene.cpp" />
     <ClCompile Include="src\ogl1_11_flying_flag.cpp" />
