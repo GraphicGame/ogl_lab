@@ -60,6 +60,9 @@
     <ClCompile Include="src\ogl1_12_display_list.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ogl1_14_vector_font.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h">
