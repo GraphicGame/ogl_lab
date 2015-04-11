@@ -25,6 +25,7 @@ static const int COL = 50;
 static vertex s_model_vertexes[ROW][COL];
 
 static bool s_wave = true;
+static GLfloat s_angle = 0.0f;
 
 static void init_gl() {
 	glEnable(GL_TEXTURE_2D);
@@ -49,11 +50,11 @@ static void init_gl() {
 static void do_wave() {
 	if (s_wave) {
 		for (int row = 0; row < ROW; row++) {
-			GLfloat first_z = s_model_vertexes[row][0].z;
-			for (int col = 0; col < COL - 4; col++) {
-				s_model_vertexes[row][col].z = s_model_vertexes[row][col + 1].z;
+			GLfloat first_z = s_model_vertexes[row][COL - 1].z;
+			for (int col = COL - 1; col > 4; col--) {
+				s_model_vertexes[row][col].z = s_model_vertexes[row][col - 1].z;
 			}
-			s_model_vertexes[row][COL - 4].z = first_z;
+			s_model_vertexes[row][5].z = first_z;
 		}
 	}
 	//s_wave = !s_wave;
@@ -65,6 +66,11 @@ static void on_draw() {
 	glBindTexture(GL_TEXTURE_2D, s_tex_ids[0]);
 
 	glTranslatef(0, 0, -20.0f);
+	glRotatef(s_angle, 1, 1, 1);
+	if (++s_angle > 360.0f) {
+		s_angle = 0.0f;
+	}
+
 	glBegin(GL_QUADS);
 	for (int row = 0; row < ROW - 1; row++) {
 		for (int col = 0; col < COL - 1; col++) {
