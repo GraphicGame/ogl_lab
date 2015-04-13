@@ -1,4 +1,4 @@
-//#define __exec
+#define __exec
 
 #include <stdio.h>
 #include <vector>
@@ -14,13 +14,22 @@ static vector<image_data*> s_images;
 static vector<GLuint> s_tex_ids;
 
 static GLuint s_cube_dislist = 0;
-static GLuint s_quad_dislist = 0;
+
+static enum quadric_type {
+	QUADRIC_CUBE = 0,
+	QUADRIC_SPHERE,
+	QUADRIC_CONE,
+	QUADRIC_CYLINDER
+};
+static quadric_type s_quadric_type = QUADRIC_CUBE;
 
 typedef struct {
 	GLfloat x, y, z;
 } simple_viewer;
 
 static simple_viewer s_viewer;
+static GLUquadric *s_GLUquadric_obj;
+static GLfloat s_rot_angle = 0.0f;
 
 static void init_gl() {
 	glEnable(GL_TEXTURE_2D);
@@ -41,29 +50,32 @@ static void init_gl() {
 
 static void on_draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	glLoadIdentity();
 	glBindTexture(GL_TEXTURE_2D, s_tex_ids[0]);
 	glTranslatef(-s_viewer.x, -s_viewer.y, -s_viewer.z);
 	glTranslatef(0, 0, -6.0f);
-	glRotatef(30, 0, 1, 0);
-	glCallList(s_cube_dislist);
+	glRotatef(s_rot_angle, 0, 1, 0);
+	if (++s_rot_angle > 360.0f) {
+		s_rot_angle = 0.0f;
+	}
 
-	glBindTexture(GL_TEXTURE_2D, s_tex_ids[1]);
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, 2, 0, 2.0f / aspect_ratio, -100, 100); //-1 or 1
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(-s_viewer.x, -s_viewer.y, -s_viewer.z);
-	glTranslatef(1.0f, 0.68f, -1.0f);
-	glCallList(s_quad_dislist);
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
+	switch (s_quadric_type) {
+	case QUADRIC_CUBE:
+		glCallList(s_cube_dislist);
+		break;
+	case QUADRIC_SPHERE:
+		gluSphere(s_GLUquadric_obj, 1.0f, 100, 100);
+		break;
+	case QUADRIC_CONE:
+		gluCylinder(s_GLUquadric_obj, 1.0f, 0.0f, 2.0f, 100, 100);
+		break;
+	case QUADRIC_CYLINDER:
+		gluCylinder(s_GLUquadric_obj, 1.0f, 0.6f, 2.0f, 100, 100);
+		break;
+	default:
+		break;
+	}
 
 	flush();
 }
@@ -134,17 +146,6 @@ static void build_list() {
 
 	glEnd();
 	glEndList();
-
-	s_quad_dislist = glGenLists(1);
-	glNewList(s_quad_dislist, GL_COMPILE);
-	float r = 0.5f;
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, -1); glVertex3f(-r, r, 0);
-	glTexCoord2d(0, 0); glVertex3f(-r, -r, 0);
-	glTexCoord2d(1, 0); glVertex3f(r, -r, 0);
-	glTexCoord2d(1, -1); glVertex3f(r, r, 0);
-	glEnd();
-	glEndList();
 }
 
 static void init_viewer() {
@@ -168,9 +169,21 @@ static void on_key(uchar code, int x, int y) {
 	case 'd':
 		s_viewer.x += step;
 		break;
+	case ' ':
+		s_quadric_type = (enum quadric_type)((int)s_quadric_type + 1);
+		if (s_quadric_type > QUADRIC_CYLINDER) {
+			s_quadric_type = QUADRIC_CUBE;
+		}
+		break;
 	default:
 		break;
 	}
+}
+
+static void init_quadrics() {
+	s_GLUquadric_obj = gluNewQuadric();
+	gluQuadricNormals(s_GLUquadric_obj, GL_SMOOTH);
+	gluQuadricTexture(s_GLUquadric_obj, GL_TRUE);
 }
 
 #ifdef __exec
@@ -181,7 +194,8 @@ int main(int argc, char *argv[]) {
 	load_gl_textures();
 	build_list();
 	init_viewer();
-	
+	init_quadrics();
+
 	glutDisplayFunc(on_draw);
 	glutIdleFunc(on_draw);
 	glutKeyboardFunc(on_key);
