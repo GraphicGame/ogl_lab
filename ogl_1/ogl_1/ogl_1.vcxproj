@@ -87,6 +87,7 @@
     <ClCompile Include="src\ogl1_14_vector_font.cpp" />
     <ClCompile Include="src\ogl1_15_vector_font_texturing.cpp" />
     <ClCompile Include="src\ogl1_16_fog.cpp" />
+    <ClCompile Include="src\ogl1_17_two_projections.cpp" />
     <ClCompile Include="src\ogl1_1_glew_glut_fw.cpp" />
     <ClCompile Include="src\ogl1_2_polygon.cpp" />
     <ClCompile Include="src\ogl1_3_color.cpp" />

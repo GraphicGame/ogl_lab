@@ -69,6 +69,9 @@
     <ClCompile Include="src\ogl1_16_fog.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ogl1_17_two_projections.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h">

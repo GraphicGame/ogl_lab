@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 #include <vector>
@@ -27,14 +27,14 @@ typedef struct {
 static simple_viewer s_viewer;
 
 static void init_fog() {
-	float f_color[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	float f_color[4] = { 0.6f, 0.6f, 0.6f, 1.0f };
 
 	glFogi(GL_FOG_MODE, GL_LINEAR);
 	glFogfv(GL_FOG_COLOR, f_color);
-	glFogf(GL_FOG_DENSITY, 0.08f);
+	glFogf(GL_FOG_DENSITY, 0.002f);
 	glHint(GL_FOG_HINT, GL_NICEST);
-	glFogf(GL_FOG_START, 0.1f);
-	glFogf(GL_FOG_END, 6.0f);
+	glFogf(GL_FOG_START, 1.0f);
+	glFogf(GL_FOG_END, 20.0f);
 }
 
 static void init_gl() {
