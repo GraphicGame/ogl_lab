@@ -1,4 +1,4 @@
-#define __exec
+//#define __exec
 
 #include <stdio.h>
 #include <math.h>
@@ -60,7 +60,7 @@ static void reset_particle(particle *p) {
 	p->ys = s_base_y_speed + (float)(rand() % 20 - 10) / 40.0f + 0.08f;
 	p->zs = (float)(rand() % 20 - 10) / 40.0f + 0.08f;
 	p->xg = 0.0f;
-	p->yg = -0.1f;
+	p->yg = 0.1f;
 	p->zg = 0.0f;
 }
 

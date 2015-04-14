@@ -78,6 +78,12 @@
     <ClCompile Include="src\ogl1_19_particles.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ogl1_20_advanced_blend.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ogl1_21_smooth.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\common_header.h">
